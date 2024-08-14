@@ -1,8 +1,15 @@
 package com.timekeeping.timekeeping.models;
 
 import java.util.Date;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
+@Entity
 public class Payroll {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int payrollID;
     private int accountID;
     private int salaryID;

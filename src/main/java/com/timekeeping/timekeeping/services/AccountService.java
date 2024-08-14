@@ -21,7 +21,7 @@ public class AccountService implements UserDetailsService {
         Optional<Account> accountOptional = accountRepository.findByUsername(username);
 
         if (accountOptional.isEmpty()) {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Sai tài khoản hoặc mật khẩu.");
         }
 
         Account account = accountOptional.get();

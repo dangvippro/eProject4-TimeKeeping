@@ -1,6 +1,13 @@
 package com.timekeeping.timekeeping.models;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
+@Entity
 public class Deduction {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int deductionID;
     private String deductionType;
     private String description;
