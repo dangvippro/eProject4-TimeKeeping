@@ -1,9 +1,6 @@
 package com.timekeeping.timekeeping.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 @Entity
@@ -25,13 +22,15 @@ public class Account {
     private int codeBank;
     private String password;
     private String username;
+    @ManyToOne
+    private Role role;
 
     public Account() {
     }
 
     public Account(int accountID, int roleId, String status, String address, Date hireDate, int departmentID,
                    String position, String phoneNumber, String email, Date birthDate, String gender,
-                   String fullName, int codeBank, String password, String username) {
+                   String fullName, int codeBank, String password, String username, Role role) {
         this.accountID = accountID;
         this.roleId = roleId;
         this.status = status;
@@ -47,6 +46,7 @@ public class Account {
         this.codeBank = codeBank;
         this.password = password;
         this.username = username;
+        this.role = role;
     }
 
     public int getAccountID() {
@@ -167,5 +167,12 @@ public class Account {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
