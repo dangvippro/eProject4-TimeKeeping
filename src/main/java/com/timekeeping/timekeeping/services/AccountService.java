@@ -79,6 +79,11 @@ public class AccountService implements UserDetailsService {
     }
 
     public void delete(int id) {
-        accountRepository.deleteById(id);
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            account.setStatus("InActive");
+            accountRepository.save(account);
+        }
     }
 }

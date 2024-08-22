@@ -1,5 +1,6 @@
 package com.timekeeping.timekeeping.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,20 +19,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/login").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/scss/**", "/lib/**", "/img/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll() // Allow all requests without authentication
                 )
                 .formLogin(form -> form
-                        .loginPage("/auth/login")
-                        .defaultSuccessUrl("/home", true)
+                        .loginPage("/auth/login") // Specify the login page
+                        .defaultSuccessUrl("/", true) // Redirect to /home after successful login
+                        .permitAll() // Allow access to the login page without authentication
                 )
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
-                        .logoutSuccessUrl("/auth")
+                        .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                );
+                        .permitAll() // Allow access to logout without authentication
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint((request, response, authException) ->
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
+                        )
+                )
+                .csrf(csrf -> csrf.disable()); // Disable CSRF protection if not needed
 
         return http.build();
     }
@@ -46,4 +53,3 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
-

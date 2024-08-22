@@ -1,6 +1,7 @@
 package com.timekeeping.timekeeping.models;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 @Entity
@@ -11,11 +12,13 @@ public class Account {
     private int roleId;
     private String status;
     private String address;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hireDate;
     private int departmentID;
     private String position;
     private String phoneNumber;
     private String email;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
     private String gender;
     private String fullName;
