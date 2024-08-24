@@ -178,41 +178,41 @@
             <div class="row g-4">
                 <div class="col-12">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">Bảng Quyền</h6>
-                        <a href="/role/create" class="btn btn-success mb-3">Tạo Mới</a>
+                        <h6 class="mb-4">Bảng Mẫu Lương</h6>
+                        <a href="/salaryTemplates/create" class="btn btn-success mb-3">Tạo Mới</a>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Tên Quyền</th>
-                                    <th scope="col">Trạng Thái</th>
-                                    <th scope="col">Hành Động</th>
+                                    <th scope="col">Tên bậc lương</th>
+                                    <th scope="col">Lương cơ bản</th>
+                                    <th scope="col">Vùng</th>
+                                    <th scope="col">Lương cơ bản cuối cùng</th>
+                                    <th scope="col">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="role, iterStat : ${roles}">
-                                    <td th:text="${role.getRoleID()}"></td>
-                                    <td th:text="${role.getName()}"></td>
-                                    <td th:text="${role.isActive() ? 'Hoạt Động' : 'Không Hoạt Động'}"></td>
+                                <tr th:each="salaryTemplate, iterStat : ${salaryTemplates}">
+                                    <td th:text="${iterStat.count}"></td> <!-- Đếm số thứ tự -->
+                                    <td th:text="${salaryTemplate.gradeName}"></td>
+                                    <td th:text="${#numbers.formatDecimal(salaryTemplate.baseSalary, 1, 'COMMA', 2, 'POINT')} + ' VND'"></td>
+                                    <td th:text="${salaryTemplate.region.regionName}"></td>
+                                    <td th:text="${#numbers.formatDecimal(salaryTemplate.calculateFinalBaseSalary(), 1, 'COMMA', 2, 'POINT')} + ' VND'"></td>
                                     <td>
                                         <!-- Action Links -->
-                                        <a th:href="@{/role/edit/{id}(id=${role.getRoleID()})}" class="btn btn-primary btn-sm">Sửa</a>
+                                        <a th:href="@{/salaryTemplates/edit/{id}(id=${salaryTemplate.salaryID})}" class="btn btn-primary btn-sm">Sửa</a>
 
-                                        <a th:if="${role.isActive()}"
-                                           th:href="@{/role/delete/{id}(id=${role.getRoleID()})}"
+                                        <a th:href="@{/salaryTemplates/delete/{id}(id=${salaryTemplate.salaryID})}"
                                            class="btn btn-danger btn-sm"
-                                           onclick="return confirm('Quản lý có chắc chắn muốn tắt quyền này?');">Tắt</a>
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa mẫu lương này?');">Xóa</a>
 
-                                        <a th:if="${!role.isActive()}"
-                                           th:href="@{/role/activate/{id}(id=${role.getRoleID()})}"
-                                           class="btn btn-success btn-sm"
-                                           onclick="return confirm('Quản lý có chắc chắn muốn bật quyền này?');">Bật</a>
-                                        <a th:href="@{/role/{id}(id=${role.getRoleID()})}" class="btn btn-info btn-sm">Chi tiết</a>
+                                        <a th:href="@{/salaryTemplates/{id}(id=${salaryTemplate.salaryID})}" class="btn btn-info btn-sm">Chi tiết</a>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
+
                         </div>
                     </div>
 

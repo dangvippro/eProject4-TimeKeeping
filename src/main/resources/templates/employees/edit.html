@@ -44,7 +44,7 @@
     <div class="sidebar pe-4 pb-3">
         <nav class="navbar bg-light navbar-light">
             <a href="index.html" class="navbar-brand mx-4 mb-3">
-                <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>TimeKeeping</h3>
+                <h3 class="text-primary">TimeKeeping</h3>
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
@@ -57,26 +57,24 @@
                 <!--                </div>-->
             </div>
             <div class="navbar-nav w-100">
-                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a th:href="@{dashboard}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Bảng Điều Khiển</a>
+
+                <a th:href="@{/employee}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Nhân Viên</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Lương</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="button.html" class="dropdown-item">Buttons</a>
-                        <a href="typography.html" class="dropdown-item">Typography</a>
-                        <a href="element.html" class="dropdown-item">Other Elements</a>
+                        <a th:href="@{/salaryTemplates}" class="dropdown-item"><i class="fa fa-table me-2"></i>Mẫu Lương</a>
                     </div>
                 </div>
-                <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Quản lý nhân viên</a>
-                <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quản lý quyền</a>
-                <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Quản lý bảng lương</a>
-                <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                <a th:href="@{/role}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quyền</a>
+                <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Biểu Đồ</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Trang</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a href="signin.html" class="dropdown-item">Sign In</a>
-                        <a href="signup.html" class="dropdown-item">Sign Up</a>
-                        <a href="404.html" class="dropdown-item">404 Error</a>
-                        <a href="blank.html" class="dropdown-item">Blank Page</a>
+                        <a href="signin.html" class="dropdown-item">Đăng Nhập</a>
+                        <a href="signup.html" class="dropdown-item">Đăng Ký</a>
+                        <a href="404.html" class="dropdown-item">Lỗi 404</a>
+                        <a href="blank.html" class="dropdown-item">Trang Trống</a>
                     </div>
                 </div>
             </div>
@@ -182,86 +180,96 @@
                     <div class="bg-light rounded h-100 p-4">
                         <h6 class="mb-4">Chỉnh sửa nhân viên</h6>
                         <div class="table-responsive">
-                            <form th:action="@{/employee/edit}" method="post">
+                            <form th:object="${account}" th:action="@{/employee/edit}" method="post">
                                 <div class="card">
                                     <div class="card-header">
                                         Chỉnh Sửa Thông Tin Tài Khoản
                                     </div>
                                     <div class="card-body">
-                                        <input type="hidden" th:field="*{account.accountID}" />
+                                        <input type="hidden" th:field="*{accountID}" />
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="fullName">Họ và Tên</label>
-                                                <input type="text" th:field="*{account.fullName}" th:value="${account.getFullName()}" id="fullName" class="form-control"/>
+                                                <input type="text" th:field="*{fullName}" id="fullName" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="username">Tên Đăng Nhập</label>
-                                                <input type="text" th:field="*{account.username}" th:value="${account.getUsername()}" id="username" class="form-control"/>
+                                                <input type="text" th:field="*{username}" id="username" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="email">Email</label>
-                                                <input type="email" th:field="*{account.email}" th:value="${account.getEmail()}" id="email" class="form-control"/>
+                                                <input type="email" th:field="*{email}" id="email" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="phoneNumber">Số Điện Thoại</label>
-                                                <input type="text" th:field="*{account.phoneNumber}" th:value="${account.getPhoneNumber()}" id="phoneNumber" class="form-control"/>
+                                                <input type="text" th:field="*{phoneNumber}" id="phoneNumber" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="gender">Giới Tính</label>
-                                                <select th:field="*{account.gender}" id="gender" class="form-control">
-                                                    <option th:value="Male" th:selected="${account.getGender()} == 'Male'">Nam</option>
-                                                    <option th:value="Female" th:selected="${account.getGender()} == 'Female'">Nữ</option>
+                                                <select th:field="*{gender}" id="gender" class="form-control">
+                                                    <option th:value="Male" th:selected="${account.gender == 'Male'}">Nam</option>
+                                                    <option th:value="Female" th:selected="${account.gender == 'Female'}">Nữ</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="birthDate">Ngày Sinh</label>
-                                                <input type="date" th:field="*{account.birthDate}" th:value="${#dates.format(account.getBirthDate(),'yyyy-MM-dd')}" id="birthDate" class="form-control"/>
+                                                <input type="date" th:field="*{birthDate}" id="birthDate" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="address">Địa Chỉ</label>
-                                                <input type="text" th:field="*{account.address}" th:value="${account.getAddress()}" id="address" class="form-control"/>
+                                                <input type="text" th:field="*{address}" id="address" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="hireDate">Ngày Thuê</label>
-                                                <input type="date" th:field="*{account.hireDate}" th:value="${#dates.format(account.getHireDate(),'yyyy-MM-dd')}" id="hireDate" class="form-control"/>
+                                                <input type="date" th:field="*{hireDate}" id="hireDate" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="position">Chức Vụ</label>
-                                                <input type="text" th:field="*{account.position}" th:value="${account.getPosition()}" id="position" class="form-control"/>
+                                                <select th:field="*{position}" id="position" class="form-control">
+                                                    <option th:each="position : ${positions}" th:value="${position.id}" th:text="${position.name}"
+                                                            th:selected="${position.id == account.position?.id}"></option>
+                                                </select>
                                             </div>
+
                                             <div class="col-md-6 mb-3">
-                                                <label for="departmentID">Mã Phòng Ban</label>
-                                                <input type="text" th:field="*{account.departmentID}" th:value="${account.getDepartmentID()}" id="departmentID" class="form-control"/>
+                                                <label for="department">Phòng Ban</label>
+                                                <select th:field="*{department}" id="department" class="form-control">
+                                                    <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"
+                                                            th:selected="${department.id == account.department?.id}"></option>
+                                                </select>
                                             </div>
+
                                             <div class="col-md-6 mb-3">
                                                 <label for="role">Vai Trò</label>
-                                                <select th:field="*{account.roleId}" id="role" class="form-control">
+                                                <select th:field="*{role}" id="role" class="form-control">
                                                     <option th:each="role : ${roles}" th:value="${role.roleID}" th:text="${role.name}"
-                                                            th:selected="${role.roleID == account.roleId}"></option>
+                                                            th:selected="${role.roleID == account.role?.roleID}"></option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="status">Trạng Thái</label>
-                                                <select th:field="*{account.status}" id="status" class="form-control">
-                                                    <option th:value="Active" th:selected="${account.getStatus()} == 'Active'">Hoạt Động</option>
-                                                    <option th:value="Inactive" th:selected="${account.getStatus()} == 'Inactive'">Không Hoạt Động</option>
+                                                <select th:field="*{status}" id="status" class="form-control">
+                                                    <option th:value="Active" th:selected="${account.status == 'Active'}">Hoạt Động</option>
+                                                    <option th:value="Inactive" th:selected="${account.status == 'Inactive'}">Không Hoạt Động</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="codeBank">Mã Ngân Hàng</label>
-                                                <input type="text" th:field="*{account.codeBank}" th:value="${account.getCodeBank()}" id="codeBank" class="form-control"/>
+                                                <input type="number" th:field="*{codeBank}" id="codeBank" class="form-control"/>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label for="password">Mật Khẩu</label>
-                                                <input type="password" th:field="*{account.password}" th:value="${account.getPassword()}" id="password" class="form-control"/>
+                                                <input type="password" th:field="*{password}" id="password" class="form-control"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
-                                        <button type="submit" class="btn btn-success">Lưu</button>
+                                        <button type="submit" class="btn btn-outline-success">Lưu</button>
+                                        <a th:href="@{/employee}" class="btn btn-outline-danger">Quay về</a>
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>

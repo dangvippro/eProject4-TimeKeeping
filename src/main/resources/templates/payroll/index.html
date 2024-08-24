@@ -56,16 +56,19 @@
                 <!--                </div>-->
             </div>
             <div class="navbar-nav w-100">
-                <a th:href="@{dashboard}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Bảng Điều Khiển</a>
-
-                <a th:href="@{/employee}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Nhân Viên</a>
+                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Bảng Điều Khiển</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Lương</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Thành Phần</a>
                     <div class="dropdown-menu bg-transparent border-0">
-                        <a th:href="@{/salaryTemplates}" class="dropdown-item"><i class="fa fa-table me-2"></i>Mẫu Lương</a>
+                        <a href="button.html" class="dropdown-item">Nút Bấm</a>
+                        <a href="typography.html" class="dropdown-item">Kiểu Chữ</a>
+                        <a href="element.html" class="dropdown-item">Thành Phần Khác</a>
                     </div>
                 </div>
+
+                <a th:href="@{/employee}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Nhân Viên</a>
                 <a th:href="@{/role}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Quyền</a>
+                <a th:href="@{/payroll}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Bảng Lương</a>
                 <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Biểu Đồ</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Trang</a>
@@ -178,7 +181,7 @@
             <div class="row g-4">
                 <div class="col-12">
                     <div class="bg-light rounded h-100 p-4">
-                        <h6 class="mb-4">Bảng Quyền</h6>
+                        <h6 class="mb-4">Bảng Lương</h6>
                         <a href="/role/create" class="btn btn-success mb-3">Tạo Mới</a>
                         <div class="table-responsive">
                             <table class="table">

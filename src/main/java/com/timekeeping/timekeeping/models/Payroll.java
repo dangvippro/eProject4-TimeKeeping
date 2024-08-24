@@ -1,10 +1,8 @@
 package com.timekeeping.timekeeping.models;
 
 import java.util.Date;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import java.util.List;
+import jakarta.persistence.*;
 
 @Entity
 public class Payroll {
@@ -17,6 +15,12 @@ public class Payroll {
     private double grossSalary;
     private double netSalary;
 
+    @OneToMany(mappedBy = "payroll", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Deduction> deductions;
+
+    @OneToMany(mappedBy = "payroll", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bonus> bonuses;
+
     public Payroll() {
     }
 
@@ -28,6 +32,8 @@ public class Payroll {
         this.grossSalary = grossSalary;
         this.netSalary = netSalary;
     }
+
+    // Getters and Setters
 
     public int getPayrollID() {
         return payrollID;
@@ -76,4 +82,29 @@ public class Payroll {
     public void setNetSalary(double netSalary) {
         this.netSalary = netSalary;
     }
+
+    public List<Deduction> getDeductions() {
+        return deductions;
+    }
+
+    public void setDeductions(List<Deduction> deductions) {
+        this.deductions = deductions;
+    }
+
+    public List<Bonus> getBonuses() {
+        return bonuses;
+    }
+
+    public void setBonuses(List<Bonus> bonuses) {
+        this.bonuses = bonuses;
+    }
+
+    // Method to calculate net salary
+    public void calculateNetSalary() {
+        double totalDeductions = deductions.stream().mapToDouble(Deduction::getAmount).sum();
+        double totalBonuses = bonuses.stream().mapToDouble(Bonus::getAmount).sum();
+        this.netSalary = this.grossSalary - totalDeductions + totalBonuses;
+    }
+
+    // Other methods...
 }

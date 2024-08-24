@@ -1,8 +1,6 @@
 package com.timekeeping.timekeeping.models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Deduction {
@@ -13,18 +11,25 @@ public class Deduction {
     private String description;
     private double amount;
 
+    @ManyToOne
+    @JoinColumn(name = "payrollID")
+    private Payroll payroll;
+
     // Constructors
+
     public Deduction() {
     }
 
-    public Deduction(int deductionID, String deductionType, String description, double amount) {
+    public Deduction(int deductionID, String deductionType, String description, double amount, Payroll payroll) {
         this.deductionID = deductionID;
         this.deductionType = deductionType;
         this.description = description;
         this.amount = amount;
+        this.payroll = payroll;
     }
 
     // Getters and Setters
+
     public int getDeductionID() {
         return deductionID;
     }
@@ -57,10 +62,13 @@ public class Deduction {
         this.amount = amount;
     }
 
-    // Method to apply the deduction to the gross salary
-    public double applyDeduction(double grossSalary) {
-        return grossSalary - this.amount;
+    public Payroll getPayroll() {
+        return payroll;
     }
 
-    // Optionally, you can add other methods like toString, equals, hashCode, etc.
+    public void setPayroll(Payroll payroll) {
+        this.payroll = payroll;
+    }
+
+    // Other methods...
 }

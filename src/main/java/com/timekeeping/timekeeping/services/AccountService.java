@@ -1,6 +1,7 @@
 package com.timekeeping.timekeeping.services;
 
 import com.timekeeping.timekeeping.models.Account;
+import com.timekeeping.timekeeping.models.Role;
 import com.timekeeping.timekeeping.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -64,8 +65,8 @@ public class AccountService implements UserDetailsService {
         return Optional.empty();
     }
 
-    public void save(Account account, int roleId) {
-        account.setRoleId(roleId > 0 ? roleId : 4);
+    public void save(Account account, Role roleId) {
+        account.setRole(roleId);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
     }
@@ -83,6 +84,15 @@ public class AccountService implements UserDetailsService {
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             account.setStatus("InActive");
+            accountRepository.save(account);
+        }
+    }
+
+    public void turnOn(int id) {
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            account.setStatus("Active");
             accountRepository.save(account);
         }
     }
