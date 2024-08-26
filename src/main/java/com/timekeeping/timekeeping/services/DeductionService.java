@@ -17,6 +17,11 @@ public class DeductionService {
     public List<Deduction> findAll() {
         return entityManager.createQuery("FROM Deduction", Deduction.class).getResultList();
     }
+    public List<Deduction> findByType(String type) {
+        return entityManager.createQuery("FROM Deduction WHERE deductionType LIKE :type", Deduction.class)
+                .setParameter("type", "%" + type + "%")
+                .getResultList();
+    }
 
     public Deduction findById(int id) {
         return entityManager.find(Deduction.class, id);

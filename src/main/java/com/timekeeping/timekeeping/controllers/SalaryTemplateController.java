@@ -21,11 +21,19 @@ public class SalaryTemplateController {
     private RegionService regionService;
 
     @GetMapping
-    public String getAllSalaryTemplates(Model model) {
-        List<SalaryTemplate> salaryTemplates = salaryTemplateService.findAllSalaryTemplates();
+    public String getAllSalaryTemplates(@RequestParam(value = "name", required = false) String name, Model model) {
+        List<SalaryTemplate> salaryTemplates;
+
+        if (name != null && !name.isEmpty()) {
+            salaryTemplates = salaryTemplateService.findByName(name);
+        } else {
+            salaryTemplates = salaryTemplateService.findAllSalaryTemplates();
+        }
+
         model.addAttribute("salaryTemplates", salaryTemplates);
-        return "salaryTemplates/index"; // Assuming you have a Thymeleaf template named index.html under the "salaryTemplates" directory
+        return "salaryTemplates/index"; // Adjust the path as needed
     }
+
 
     @GetMapping("/{id}")
     public String getSalaryTemplateById(@PathVariable int id, Model model) {

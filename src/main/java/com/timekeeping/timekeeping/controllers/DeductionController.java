@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -16,10 +17,19 @@ public class DeductionController {
     private DeductionService deductionService;
 
     @GetMapping
-    public String getAllDeductions(Model model) {
-        model.addAttribute("deductions", deductionService.findAll());
-        return "deduction/index"; // Assuming you have a Thymeleaf template named index.html under the "deductions" directory
+    public String getAllDeductions(@RequestParam(value = "type", required = false) String type, Model model) {
+        List<Deduction> deductions;
+
+        if (type != null && !type.isEmpty()) {
+            deductions = deductionService.findByType(type); // Assuming you're searching by deduction type
+        } else {
+            deductions = deductionService.findAll();
+        }
+
+        model.addAttribute("deductions", deductions);
+        return "deduction/index"; // Assuming you have a Thymeleaf template named index.html under the "deduction" directory
     }
+
 
     @GetMapping("/{id}")
     public String getDeductionById(@PathVariable int id, Model model) {

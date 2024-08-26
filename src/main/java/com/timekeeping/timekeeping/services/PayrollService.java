@@ -23,6 +23,11 @@ public class PayrollService {
         entityManager.persist(payroll);
         return payroll;
     }
+    public List<Payroll> findByName(String name) {
+        return entityManager.createQuery("FROM Payroll WHERE account.fullName LIKE :name", Payroll.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+    }
     public List<AttendanceRecord> findAttendancesByAccountAndDate(Account account, LocalDate date) {
         return entityManager.createQuery(
                         "SELECT a FROM AttendanceRecord a WHERE a.account = :account AND a.Date = :date", AttendanceRecord.class)

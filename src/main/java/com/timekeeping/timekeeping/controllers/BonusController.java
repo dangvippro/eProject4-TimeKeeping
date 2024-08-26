@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -17,9 +18,17 @@ public class BonusController {
     private BonusService bonusService;
 
     @GetMapping
-    public String getAllBonuses(Model model) {
-        model.addAttribute("bonuses", bonusService.findAll());
-        return "bonus/index"; // Assuming you have a Thymeleaf template named index.html under the "bonuses" directory
+    public String getAllBonuses(@RequestParam(value = "type", required = false) String type, Model model) {
+        List<Bonus> bonuses;
+
+        if (type != null && !type.isEmpty()) {
+            bonuses = bonusService.findByType(type); // Assuming you're searching by bonus type
+        } else {
+            bonuses = bonusService.findAll();
+        }
+
+        model.addAttribute("bonuses", bonuses);
+        return "bonus/index"; // Assuming you have a Thymeleaf template named index.html under the "bonus" directory
     }
 
     @GetMapping("/{id}")

@@ -61,10 +61,19 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public String getAllEmployee(Model model) {
-        model.addAttribute("accounts", accountService.findAll());
-        return "employees/index";
+    public String getAllEmployee(@RequestParam(value = "name", required = false) String name, Model model) {
+        List<Account> accounts;
+
+        if (name != null && !name.isEmpty()) {
+            accounts = accountService.findByName(name); // Assuming you're searching by employee name or account name
+        } else {
+            accounts = accountService.findAll();
+        }
+
+        model.addAttribute("accounts", accounts);
+        return "employees/index"; // Assuming you have a Thymeleaf template named index.html under the "employees" directory
     }
+
 
     @GetMapping("/{id}")
     public String getEmployeeById(@PathVariable int id, Model model) {

@@ -19,7 +19,11 @@ public class RegionService {
         System.out.println("Regions fetched: " + regions.size()); // Log the number of regions fetched
         return regions;
     }
-
+    public List<Region> findByName(String name) {
+        return entityManager.createQuery("FROM Region WHERE regionName LIKE :name", Region.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+    }
     // Method to find a region by its ID
     public Region findById(int regionID) {
         return entityManager.find(Region.class, regionID);

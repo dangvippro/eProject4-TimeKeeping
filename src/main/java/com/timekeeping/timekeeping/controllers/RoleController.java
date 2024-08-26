@@ -17,10 +17,19 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping
-    public String getAllRoles(Model model) {
-        model.addAttribute("roles", roleService.findAll());
+    public String getAllRoles(@RequestParam(value = "name", required = false) String name, Model model) {
+        List<Role> roles;
+
+        if (name != null && !name.isEmpty()) {
+            roles = roleService.findByName(name);
+        } else {
+            roles = roleService.findAll();
+        }
+
+        model.addAttribute("roles", roles);
         return "roles/index"; // Assuming you have a Thymeleaf template named index.html under the "roles" directory
     }
+
 
     @GetMapping("/{id}")
     public String getRoleById(@PathVariable int id, Model model) {

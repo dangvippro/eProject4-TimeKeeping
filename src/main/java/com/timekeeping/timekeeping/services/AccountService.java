@@ -3,6 +3,7 @@ package com.timekeeping.timekeeping.services;
 import com.timekeeping.timekeeping.models.Account;
 import com.timekeeping.timekeeping.models.Role;
 import com.timekeeping.timekeeping.repositories.AccountRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,13 +21,19 @@ public class AccountService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private EntityManager entityManager;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-
+    public List<Account> findByName(String name) {
+        return entityManager.createQuery("FROM Account WHERE fullName LIKE :name", Account.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Account> accountOptional = accountRepository.findByUsername(username);

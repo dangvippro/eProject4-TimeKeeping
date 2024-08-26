@@ -18,11 +18,19 @@ public class PayrollController {
     private PayrollService payrollService;
 
     @GetMapping
-    public String getAllPayrolls(Model model) {
-        List<Payroll> payrolls = payrollService.findAllPayrolls();
+    public String getAllPayrolls(@RequestParam(value = "name", required = false) String name, Model model) {
+        List<Payroll> payrolls;
+
+        if (name != null && !name.isEmpty()) {
+            payrolls = payrollService.findByName(name); // Assuming you're searching by employee name or payroll name
+        } else {
+            payrolls = payrollService.findAllPayrolls();
+        }
+
         model.addAttribute("payrolls", payrolls);
-        return "payroll/index";
+        return "payroll/index"; // Assuming you have a Thymeleaf template named index.html under the "payroll" directory
     }
+
 
     @GetMapping("/{id}")
     public String getPayroll(@PathVariable int id, Model model) {

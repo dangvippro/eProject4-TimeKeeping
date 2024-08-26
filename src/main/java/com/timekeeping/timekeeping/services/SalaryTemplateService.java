@@ -42,4 +42,9 @@ public class SalaryTemplateService {
     public List<SalaryTemplate> findAllSalaryTemplates() {
         return entityManager.createQuery("SELECT st FROM SalaryTemplate st", SalaryTemplate.class).getResultList();
     }
+    public List<SalaryTemplate> findByName(String name) {
+        return entityManager.createQuery("FROM SalaryTemplate WHERE gradeName LIKE :name", SalaryTemplate.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+    }
 }

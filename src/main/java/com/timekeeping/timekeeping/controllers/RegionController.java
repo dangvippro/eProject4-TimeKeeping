@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -16,10 +17,19 @@ public class RegionController {
     private RegionService regionService;
 
     @GetMapping
-    public String getAllRegions(Model model) {
-        model.addAttribute("regions", regionService.findAll());
-        return "region/index";
+    public String getAllRegions(@RequestParam(value = "name", required = false) String name, Model model) {
+        List<Region> regions;
+
+        if (name != null && !name.isEmpty()) {
+            regions = regionService.findByName(name);
+        } else {
+            regions = regionService.findAll();
+        }
+
+        model.addAttribute("regions", regions);
+        return "region/index"; // Assuming you have a Thymeleaf template named index.html under the "region" directory
     }
+
 
     @GetMapping("/{id}")
     public String getRegionById(@PathVariable int id, Model model) {

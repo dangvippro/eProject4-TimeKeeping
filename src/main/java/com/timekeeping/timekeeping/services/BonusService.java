@@ -24,7 +24,11 @@ public class BonusService {
             entityManager.merge(bonus);
         }
     }
-
+    public List<Bonus> findByType(String type) {
+        return entityManager.createQuery("FROM Bonus WHERE bonusType LIKE :type", Bonus.class)
+                .setParameter("type", "%" + type + "%")
+                .getResultList();
+    }
     @Transactional
     public void delete(int id) {
         Bonus bonus = entityManager.find(Bonus.class, id);

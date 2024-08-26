@@ -22,7 +22,11 @@ public class RoleService {
         TypedQuery<Role> query = entityManager.createQuery("SELECT r FROM Role r", Role.class);
         return query.getResultList();
     }
-
+    public List<Role> findByName(String name) {
+        return entityManager.createQuery("FROM Role WHERE name LIKE :name", Role.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+    }
     public Role findById(int id) {
         return entityManager.find(Role.class, id);
     }
