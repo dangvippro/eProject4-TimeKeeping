@@ -12,24 +12,21 @@ public class Deduction {
     private double amount;
 
     @ManyToOne
-    @JoinColumn(name = "payrollID")
+    @JoinColumn(name = "payroll_id")
     private Payroll payroll;
 
     // Constructors
-
     public Deduction() {
     }
 
-    public Deduction(int deductionID, String deductionType, String description, double amount, Payroll payroll) {
+    public Deduction(int deductionID, String deductionType, String description, double amount) {
         this.deductionID = deductionID;
         this.deductionType = deductionType;
         this.description = description;
         this.amount = amount;
-        this.payroll = payroll;
     }
 
     // Getters and Setters
-
     public int getDeductionID() {
         return deductionID;
     }
@@ -70,5 +67,10 @@ public class Deduction {
         this.payroll = payroll;
     }
 
-    // Other methods...
+    // Method to apply the deduction to the gross salary
+    public double applyDeduction(double grossSalary) {
+        return grossSalary - this.amount;
+    }
+
+    // Optionally, you can add other methods like toString, equals, hashCode, etc.
 }

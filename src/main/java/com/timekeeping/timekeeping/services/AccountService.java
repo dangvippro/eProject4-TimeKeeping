@@ -75,8 +75,8 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAll();
     }
 
-    public Optional<Account> findById(int id) {
-        return accountRepository.findById(id);
+    public Optional<Account> findById(int accountId) {
+        return accountRepository.findById(accountId);
     }
 
     public void delete(int id) {

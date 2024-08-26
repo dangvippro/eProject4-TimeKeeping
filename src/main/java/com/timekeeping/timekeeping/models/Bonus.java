@@ -1,31 +1,22 @@
 package com.timekeeping.timekeeping.models;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 
 @Entity
 public class Bonus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bonusID;
+    @Column(name = "bonus_type", columnDefinition = "nvarchar(255)")
     private String bonusType;
-    private int amount;
+    private double amount;
 
     @ManyToOne
-    @JoinColumn(name = "payrollID")
+    @JoinColumn(name = "payroll_id")
     private Payroll payroll;
 
-    public Bonus() {
-    }
-
-    public Bonus(int bonusID, String bonusType, int amount, Payroll payroll) {
-        this.bonusID = bonusID;
-        this.bonusType = bonusType;
-        this.amount = amount;
-        this.payroll = payroll;
-    }
-
-    // Getters and Setters
-
+    // Các phương thức getter và setter
     public int getBonusID() {
         return bonusID;
     }
@@ -42,11 +33,11 @@ public class Bonus {
         this.bonusType = bonusType;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -57,6 +48,5 @@ public class Bonus {
     public void setPayroll(Payroll payroll) {
         this.payroll = payroll;
     }
-
-    // Other methods...
 }
+

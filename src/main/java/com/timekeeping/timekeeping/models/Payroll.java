@@ -2,15 +2,25 @@ package com.timekeeping.timekeeping.models;
 
 import java.util.Date;
 import java.util.List;
+
+import com.timekeeping.timekeeping.services.PayrollService;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 public class Payroll {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int payrollID;
-    private int accountID;
-    private int salaryID;
+
+    @ManyToOne
+    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "salaryID", referencedColumnName = "salaryID")
+    private SalaryTemplate salaryTemplate;
+
     private Date payDate;
     private double grossSalary;
     private double netSalary;
@@ -21,20 +31,7 @@ public class Payroll {
     @OneToMany(mappedBy = "payroll", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Bonus> bonuses;
 
-    public Payroll() {
-    }
-
-    public Payroll(int payrollID, int accountID, int salaryID, Date payDate, double grossSalary, double netSalary) {
-        this.payrollID = payrollID;
-        this.accountID = accountID;
-        this.salaryID = salaryID;
-        this.payDate = payDate;
-        this.grossSalary = grossSalary;
-        this.netSalary = netSalary;
-    }
-
-    // Getters and Setters
-
+    // Các phương thức getter và setter
     public int getPayrollID() {
         return payrollID;
     }
@@ -43,20 +40,20 @@ public class Payroll {
         this.payrollID = payrollID;
     }
 
-    public int getAccountID() {
-        return accountID;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
-    public int getSalaryID() {
-        return salaryID;
+    public SalaryTemplate getSalaryTemplate() {
+        return salaryTemplate;
     }
 
-    public void setSalaryID(int salaryID) {
-        this.salaryID = salaryID;
+    public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
+        this.salaryTemplate = salaryTemplate;
     }
 
     public Date getPayDate() {
@@ -99,12 +96,52 @@ public class Payroll {
         this.bonuses = bonuses;
     }
 
-    // Method to calculate net salary
     public void calculateNetSalary() {
-        double totalDeductions = deductions.stream().mapToDouble(Deduction::getAmount).sum();
-        double totalBonuses = bonuses.stream().mapToDouble(Bonus::getAmount).sum();
-        this.netSalary = this.grossSalary - totalDeductions + totalBonuses;
+        double bhxh = grossSalary * 0.08;
+        double bhyt = grossSalary * 0.015;
+        double bhtn = grossSalary * 0.01;
+        double totalInsurance = bhxh + bhyt + bhtn;
+
+        double taxableIncome = grossSalary - totalInsurance;
+        double pit = calculatePIT(taxableIncome);
+
+        this.netSalary = grossSalary - totalInsurance - pit;
+    }
+//    TNCN được tính dựa trên thu nhập chịu thuế theo biểu thuế lũy tiến từng phần:
+//
+//    Thu nhập chịu thuế hàng tháng (VND)	Thuế suất TNCN
+//    Đến 5 triệu	5%
+//            5 - 10 triệu	10%
+//            10 - 18 triệu	15%
+//            18 - 32 triệu	20%
+//            32 - 52 triệu	25%
+//            52 - 80 triệu	30%
+//    Trên 80 triệu	35%
+//Bảo hiểm xã hội (BHXH):
+//    Phần người lao động đóng = 8% lương Gross.
+//    Bảo hiểm y tế (BHYT):
+//    Phần người lao động đóng = 1,5% lương Gross.
+//    Bảo hiểm thất nghiệp (BHTN):
+//    Phần người lao động đóng = 1% lương Gross.
+    // Phương thức tính thuế TNCN theo biểu thuế lũy tiến của Việt Nam
+    private double calculatePIT(double taxableIncome) {
+        double pit = 0;
+        if (taxableIncome <= 5000000) {
+            pit = taxableIncome * 0.05;
+        } else if (taxableIncome <= 10000000) {
+            pit = 5000000 * 0.05 + (taxableIncome - 5000000) * 0.1;
+        } else if (taxableIncome <= 18000000) {
+            pit = 5000000 * 0.05 + 5000000 * 0.1 + (taxableIncome - 10000000) * 0.15;
+        } else if (taxableIncome <= 32000000) {
+            pit = 5000000 * 0.05 + 5000000 * 0.1 + 8000000 * 0.15 + (taxableIncome - 18000000) * 0.2;
+        } else if (taxableIncome <= 52000000) {
+            pit = 5000000 * 0.05 + 5000000 * 0.1 + 8000000 * 0.15 + 14000000 * 0.2 + (taxableIncome - 32000000) * 0.25;
+        } else if (taxableIncome <= 80000000) {
+            pit = 5000000 * 0.05 + 5000000 * 0.1 + 8000000 * 0.15 + 14000000 * 0.2 + 20000000 * 0.25 + (taxableIncome - 52000000) * 0.3;
+        } else {
+            pit = 5000000 * 0.05 + 5000000 * 0.1 + 8000000 * 0.15 + 14000000 * 0.2 + 20000000 * 0.25 + 28000000 * 0.3 + (taxableIncome - 80000000) * 0.35;
+        }
+        return pit;
     }
 
-    // Other methods...
 }

@@ -43,4 +43,10 @@ public class RegionService {
             entityManager.remove(region);
         }
     }
+    public void delete(int id) {
+        Region region = findById(id);
+        if (region != null) {
+            entityManager.remove(region);
+        }
+    }
 }

@@ -37,7 +37,9 @@ public class Account {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;
-
+    @ManyToOne
+    @JoinColumn(name = "salaryID", referencedColumnName = "salaryID")
+    private SalaryTemplate salaryTemplate;
     public Account() {
     }
 
@@ -178,5 +180,12 @@ public class Account {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+    public SalaryTemplate getSalaryTemplate() {
+        return salaryTemplate;
+    }
+
+    public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
+        this.salaryTemplate = salaryTemplate;
     }
 }
