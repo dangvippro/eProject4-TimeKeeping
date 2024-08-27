@@ -2,6 +2,7 @@ package com.timekeeping.timekeeping.models;
 
 import com.timekeeping.timekeeping.enums.ActivityStatus;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,6 +18,7 @@ public class Activity {
     private String activityName;
     @Column(columnDefinition = "NTEXT")
     private String description;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     @Column(columnDefinition = "NVARCHAR(255)")
     private String location;

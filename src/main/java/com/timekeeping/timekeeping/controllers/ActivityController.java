@@ -20,7 +20,13 @@ public class ActivityController {
     public String getAllActivities(Model model) {
         model.addAttribute("activities", activityService.getAllActivities());
         model.addAttribute("activity", new Activity());
-        return "activities/activity";
+        return "activities/index";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("activity", new Activity());
+        return "activities/create";
     }
 
     @GetMapping("/edit/{id}")
@@ -28,7 +34,7 @@ public class ActivityController {
         Optional<Activity> activity = activityService.getActivityById(id);
         if (activity.isPresent()) {
             model.addAttribute("activity", activity.get());
-            return "activities/activity";
+            return "activities/edit";
         }
         return "redirect:/activities";
     }
@@ -48,6 +54,6 @@ public class ActivityController {
     @GetMapping("/find")
     public String findByActivityName(@RequestParam("activityName") String activityName, Model model) {
         model.addAttribute("activities", activityService.findByActivityName(activityName));
-        return "activities/activity";
+        return "activities/index";
     }
 }

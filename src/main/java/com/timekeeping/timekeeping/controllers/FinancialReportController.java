@@ -21,7 +21,13 @@ public class FinancialReportController {
     public String getAllReports(Model model) {
         model.addAttribute("financialReports", financialReportService.getAllReports());
         model.addAttribute("financialReport", new FinancialReport());
-        return "financialReports/financial_report";
+        return "financialReports/index";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("financialReport", new FinancialReport());
+        return "financialReports/create";
     }
 
     @GetMapping("/edit/{id}")
@@ -29,7 +35,7 @@ public class FinancialReportController {
         Optional<FinancialReport> report = financialReportService.getReportById(id);
         if (report.isPresent()) {
             model.addAttribute("financialReport", report.get());
-            return "financialReports/financial_report";
+            return "financialReports/edit";
         }
         return "redirect:/financialReports";
     }
@@ -52,6 +58,6 @@ public class FinancialReportController {
     @GetMapping("/find")
     public String findByTitle(@RequestParam("title") String title, Model model) {
         model.addAttribute("financialReports", financialReportService.findByTitle(title));
-        return "financialReports/financial_report";
+        return "financialReports/index";
     }
 }

@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface WorkScheduleRepository extends JpaRepository<WorkSchedule, Integer> {
-    List<WorkSchedule> findByAccountID(@Param("accountID") int accountID);
+    List<WorkSchedule> findByFullName(@Param("fullName") String fullName);
 }

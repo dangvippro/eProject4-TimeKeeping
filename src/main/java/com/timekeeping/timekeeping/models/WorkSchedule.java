@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Entity
-@NamedQuery(name = "WorkSchedule.findByAccountID", query = "SELECT w FROM WorkSchedule w WHERE w.account.accountID = :accountID")
+@NamedQuery(name = "WorkSchedule.findByFullName", query = "SELECT w FROM WorkSchedule w WHERE w.account.fullName LIKE :fullName")
 public class WorkSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,6 @@ public class WorkSchedule {
         this.shift = shift;
         this.account = account;
         this.date = date;
-        this.requestDate = requestDate;
         this.status = status;
     }
 
@@ -72,14 +71,6 @@ public class WorkSchedule {
 
     public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public LocalDate getRequestDate() {
-        return requestDate;
-    }
-
-    public void setRequestDate(LocalDate requestDate) {
-        this.requestDate = requestDate;
     }
 
     public ApprovalStatus getStatus() {

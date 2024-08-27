@@ -1,5 +1,7 @@
 package com.timekeeping.timekeeping.controllers;
 
+import com.timekeeping.timekeeping.models.Account;
+import com.timekeeping.timekeeping.models.Shift;
 import com.timekeeping.timekeeping.models.WorkSchedule;
 import com.timekeeping.timekeeping.services.AccountService;
 import com.timekeeping.timekeeping.services.ShiftService;
@@ -33,8 +35,12 @@ public class WorkScheduleController {
         return "workSchedules/index";
     }
 
-    @GetMapping
+    @GetMapping("/create")
     public String create(Model model) {
+        model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("shifts", shiftService.getAllShifts());
+        model.addAttribute("shift", new Shift());
+        model.addAttribute("account", new Account());
         model.addAttribute("workSchedule", new WorkSchedule());
         return "workSchedules/create";
     }
@@ -43,6 +49,10 @@ public class WorkScheduleController {
     public String editSchedule(@PathVariable int id, Model model) {
         Optional<WorkSchedule> schedule = workScheduleService.getScheduleById(id);
         if (schedule.isPresent()) {
+            model.addAttribute("accounts", accountService.findAll());
+            model.addAttribute("shifts", shiftService.getAllShifts());
+            model.addAttribute("shift", schedule.get().getShift());
+            model.addAttribute("account", schedule.get().getAccount());
             model.addAttribute("workSchedule", schedule.get());
             return "workSchedules/edit";
         }
@@ -62,8 +72,8 @@ public class WorkScheduleController {
     }
 
     @GetMapping("/find")
-    public String findByAccountID(@RequestParam("accountID") int accountID, Model model) {
-        model.addAttribute("workSchedules", workScheduleService.findByAccountID(accountID));
+    public String findByAccountID(@RequestParam("fullName") String fullName, Model model) {
+        model.addAttribute("workSchedules", workScheduleService.findByFullName(fullName));
         return "workSchedules/index";
     }
 }

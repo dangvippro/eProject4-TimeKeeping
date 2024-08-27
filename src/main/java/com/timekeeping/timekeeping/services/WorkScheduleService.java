@@ -21,8 +21,8 @@ public class WorkScheduleService {
         return workScheduleRepository.findById(id);
     }
 
-    public List<WorkSchedule> findByAccountID(int accountID) {
-        return workScheduleRepository.findByAccountID(accountID);
+    public List<WorkSchedule> findByFullName(String fullName) {
+        return workScheduleRepository.findByFullName("%" + fullName + "%");
     }
 
     public WorkSchedule saveSchedule(WorkSchedule schedule) {
