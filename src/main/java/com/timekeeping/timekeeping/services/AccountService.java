@@ -1,7 +1,9 @@
 package com.timekeeping.timekeeping.services;
 
 import com.timekeeping.timekeeping.models.Account;
+import com.timekeeping.timekeeping.models.Role;
 import com.timekeeping.timekeeping.repositories.AccountRepository;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,13 +21,19 @@ public class AccountService implements UserDetailsService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private EntityManager entityManager;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-
+    public List<Account> findByName(String name) {
+        return entityManager.createQuery("FROM Account WHERE fullName LIKE :name", Account.class)
+                .setParameter("name", "%" + name + "%")
+                .getResultList();
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Account> accountOptional = accountRepository.findByUsername(username);
@@ -64,8 +72,8 @@ public class AccountService implements UserDetailsService {
         return Optional.empty();
     }
 
-    public void save(Account account, int roleId) {
-        account.setRoleId(roleId > 0 ? roleId : 4);
+    public void save(Account account, Role roleId) {
+        account.setRole(roleId);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
     }
@@ -74,11 +82,25 @@ public class AccountService implements UserDetailsService {
         return accountRepository.findAll();
     }
 
-    public Optional<Account> findById(int id) {
-        return accountRepository.findById(id);
+    public Optional<Account> findById(int accountId) {
+        return accountRepository.findById(accountId);
     }
 
     public void delete(int id) {
-        accountRepository.deleteById(id);
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            account.setStatus("InActive");
+            accountRepository.save(account);
+        }
+    }
+
+    public void turnOn(int id) {
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+            account.setStatus("Active");
+            accountRepository.save(account);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.timekeeping.timekeeping.models;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 @Entity
@@ -8,36 +9,47 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int accountID;
-    private int roleId;
+
     private String status;
     private String address;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date hireDate;
-    private int departmentID;
-    private String position;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private Department department;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "position_id")
+    private Position position;
     private String phoneNumber;
     private String email;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
+
     private String gender;
+    @Column(name = "full_name", columnDefinition = "nvarchar(255)")
     private String fullName;
     private int codeBank;
     private String password;
     private String username;
-    @ManyToOne
-    private Role role;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
+    @ManyToOne
+    @JoinColumn(name = "salaryID", referencedColumnName = "salaryID")
+    private SalaryTemplate salaryTemplate;
     public Account() {
     }
 
-    public Account(int accountID, int roleId, String status, String address, Date hireDate, int departmentID,
-                   String position, String phoneNumber, String email, Date birthDate, String gender,
+    public Account(int accountID,String status, String address, Date hireDate,Department department,
+                   Position position,String phoneNumber, String email, Date birthDate, String gender,
                    String fullName, int codeBank, String password, String username, Role role) {
         this.accountID = accountID;
-        this.roleId = roleId;
         this.status = status;
         this.address = address;
         this.hireDate = hireDate;
-        this.departmentID = departmentID;
-        this.position = position;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.birthDate = birthDate;
@@ -47,6 +59,15 @@ public class Account {
         this.password = password;
         this.username = username;
         this.role = role;
+        this.department = department;
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+    public void setPosition(Position position) {
+        this.position = position;
     }
 
     public int getAccountID() {
@@ -55,14 +76,6 @@ public class Account {
 
     public void setAccountID(int accountID) {
         this.accountID = accountID;
-    }
-
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
     }
 
     public String getStatus() {
@@ -89,21 +102,6 @@ public class Account {
         this.hireDate = hireDate;
     }
 
-    public int getDepartmentID() {
-        return departmentID;
-    }
-
-    public void setDepartmentID(int departmentID) {
-        this.departmentID = departmentID;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -174,5 +172,20 @@ public class Account {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+    public SalaryTemplate getSalaryTemplate() {
+        return salaryTemplate;
+    }
+
+    public void setSalaryTemplate(SalaryTemplate salaryTemplate) {
+        this.salaryTemplate = salaryTemplate;
     }
 }

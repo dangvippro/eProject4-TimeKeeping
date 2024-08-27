@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Shift Management</title>
+</head>
+<body>
+<h1>Shift Management</h1>
+
+<form th:action="@{/shifts}" th:object="${shift}" method="post">
+  <input type="hidden" th:field="*{shiftId}"/>
+  <label for="shiftName">Shift Name:</label>
+  <input type="text" id="shiftName" th:field="*{shiftName}" required/><br/>
+
+  <label for="startTime">Start Time:</label>
+  <input type="time" id="startTime" th:field="*{startTime}" required/><br/>
+
+  <label for="endTime">End Time:</label>
+  <input type="time" id="endTime" th:field="*{endTime}" required/><br/>
+
+  <button type="submit">Save</button>
+</form>
+
+<h2>Search Shifts</h2>
+<form th:action="@{/shifts/find}" method="get">
+  <label for="shiftNameSearch">Shift Name:</label>
+  <input type="text" id="shiftNameSearch" name="shiftName"/>
+  <button type="submit">Search</button>
+</form>
+
+<h2>All Shifts</h2>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Shift Name</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Actions</th>
+  </tr>
+  <tr th:each="shift : ${shifts}">
+    <td th:text="${shift.shiftId}"></td>
+    <td th:text="${shift.shiftName}"></td>
+    <td th:text="${shift.startTime}"></td>
+    <td th:text="${shift.endTime}"></td>
+    <td>
+      <a th:href="@{/shifts/edit/{id}(id=${shift.shiftId})}">Edit</a>
+      <a th:href="@{/shifts/delete/{id}(id=${shift.shiftId})}">Delete</a>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

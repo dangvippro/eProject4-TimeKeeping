@@ -30,7 +30,7 @@ public class AuthController {
         if (foundAccountOptional.isPresent()) {
             Account foundAccount = foundAccountOptional.get();
 
-            return foundAccount.getRoleId() >= 1 || foundAccount.getRoleId() <= 3
+            return foundAccount.getRole().getRoleID() >= 1 || foundAccount.getRole().getRoleID() <= 3
                     ? "redirect:/admin/dasboard"
                     : "redirect:/home";
         } else {
@@ -49,7 +49,7 @@ public class AuthController {
         if (foundAccountOptional.isPresent()) {
             Account foundAccount = foundAccountOptional.get();
             foundAccount.setPassword(newPassword);
-            accountService.save(foundAccount, foundAccount.getRoleId());
+            accountService.save(foundAccount, foundAccount.getRole());
             return "redirect:/auth";
         }else {
             model.addAttribute("error", "Mật khẩu không khớp với mật khẩu cũ!!");

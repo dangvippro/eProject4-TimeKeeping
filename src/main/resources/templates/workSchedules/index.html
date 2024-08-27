@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutAdmin/main}">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${pageTitle}">ADMI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+            <div class="row g-4" layout:fragment="content">
+                <div class="col-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">Lịch Làm Việc</h6>
+                        <form th:action="@{/worlSchedules/find}" method="get" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="fullName" placeholder="Tìm kiếm theo tên nhân viên" aria-label="Search">
+                                <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                            </div>
+                        </form>
+
+                        <a href="/workSchedules/create" class="btn btn-success mb-3">Tạo Mới</a>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Họ Tên</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Giới Tính</th>
+                                    <th scope="col">Vị Trí</th>
+                                    <th scope="col">Phòng Ban</th>
+                                    <th scope="col">Quyền</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">Hành Động</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="schedule, iterStat : ${workSchedules}">
+                                    <td th:text="${schedule.scheduleId}"></td>
+                                    <select id="shiftId" name="shiftId" th:field="*{shift.shiftId}" required>
+                                        <option th:each="shift : ${shifts}"
+                                                th:value="${shift.shiftId}"
+                                                th:text="${shift.shiftName}"
+                                                th:selected="${schedule.shiftId} == ${shift.shiftId}"
+                                        >Shift ID</option>
+                                    </select><br/>
+                                    <td th:text="${schedule.account != null ? schedule.account.accountID : 'N/A'}"></td>
+                                    <td th:text="${schedule.date}"></td>
+                                    <td th:text="${schedule.requestDate}"></td>
+                                    <td th:text="${schedule.status.displayName}"></td>
+                                    <td>
+                                        <!-- Action Links -->
+                                        <a th:href="@{/workSchedules/edit/{id}(id=${schedule.scheduleId})}" class="btn btn-primary btn-sm">Sửa</a>
+
+                                        <a th:href="@{/workSchedules/delete/{id}(id=${schedule.scheduleId})}"
+                                           class="btn btn-danger btn-sm"
+                                           onclick="return confirm('Quản lý có chắc chắn muốn xóa ngày này này?');">Xóa</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</body>
+</html>

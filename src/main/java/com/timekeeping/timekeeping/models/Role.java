@@ -9,15 +9,26 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roleID;
     private String name;
+    private boolean active;
 
     public Role() {
     }
 
-    public Role(int roleID, String name) {
+    public Role(int roleID, String name, boolean active) {
         this.roleID = roleID;
         this.name = name;
+        this.active = active;
+    }
+    public boolean getActive(){
+        return active;
+    }
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
+    public Role(boolean active) {
+        this.active = active;
+    }
     public int getRoleID() {
         return roleID;
     }
@@ -32,5 +43,9 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

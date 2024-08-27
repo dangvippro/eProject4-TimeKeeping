@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layoutAdmin/main}">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${pageTitle}">ADMIM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="row g-4" layout:fragment="content">
+                <div class="col-12">
+                    <div class="bg-light rounded h-100 p-4">
+                        <h6 class="mb-4">Chi Tiết Bảng Lương Của: <span th:text="${payroll.account.fullName}"></span></h6>
+                        <div class="table-responsive">
+                            <div class="card">
+                                <div class="card-header">
+                                    Chi tiết Bảng Lương của <span th:text="${payroll.account.fullName}"></span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="payDate">Ngày Trả Lương</label>
+                                        <p id="payDate" th:text="${payroll.payDate}" class="form-control-plaintext"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="grossSalary">Lương Tổng (Gross Salary)</label>
+                                        <p id="grossSalary" th:text="${payroll.grossSalary}" class="form-control-plaintext"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="netSalary">Lương Thực Nhận (Net Salary)</label>
+                                        <p id="netSalary" th:text="${payroll.netSalary}" class="form-control-plaintext"></p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status">Trạng Thái</label>
+                                        <p id="status" th:text="${payroll.status}" class="form-control-plaintext"></p>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a th:href="@{/payroll/edit/{id}(id=${payroll.payrollID})}" class="btn btn-outline-primary">Sửa</a>
+                                    <a th:href="@{/payroll}" class="btn btn-outline-info">Quay về</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+</body>
+</html>
