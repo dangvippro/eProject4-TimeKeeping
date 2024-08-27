@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/")
@@ -38,4 +39,30 @@ public class HomeController {
         model.addAttribute("title", "Contact");
         return "home/contact";
     }
+
+    @GetMapping("/faceid")
+    public String showFaceIdPage() {
+        return "home/faceid"; // Ensure this matches the template name
+    }
+    @GetMapping("/attendance-success")
+    public String attendanceSuccess(
+            @RequestParam("name") String name,
+            @RequestParam("age") String age,
+            @RequestParam("time") String time,
+            @RequestParam("date") String date,
+            Model model) {
+
+        model.addAttribute("name", name);
+        model.addAttribute("age", age);
+        model.addAttribute("time", time);
+        model.addAttribute("date", date);
+
+        return "home/attendance-success";
+    }
+
+    @GetMapping("/job-list")
+    public String showJobPage() {
+        return "home/job-list"; // Ensure this matches the template name
+    }
+
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #confirmation-banner {
+            background-color: #28a745;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="confirmation-banner">
+    <strong>Attendance Recorded Successfully!</strong><br>
+    Name: <span th:text="${name}"></span><br>
+    Age: <span th:text="${age}"></span><br>
+    Time: <span th:text="${time}"></span><br>
+    Date: <span th:text="${date}"></span>
+</div>
+
+</body>
+
+</html>
