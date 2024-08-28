@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Interview Results</title>
+</head>
+<body>
+<h2>Send Interview Results Notification</h2>
+
+<form th:action="@{/interviews/result/{id}(id=${interview.id})}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label for="result">Result:</label>
+    <select id="result" name="result">
+        <option value="Accepted">Accepted</option>
+        <option value="Rejected">Rejected</option>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes"></textarea>
+
+    <button type="submit">Send Notification</button>
+</form>
+
+<a href="/interviews">Back to Interview List</a>
+</body>
+</html>
