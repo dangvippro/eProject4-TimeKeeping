@@ -1,111 +1,185 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>News Post</title>
-    <link rel="stylesheet" type="text/css" href="/path/to/news-page.css">
-    <style>
-        /* General styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .container {
-            width: 80%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            color: #333;
-        }
-
-        .news-content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .news-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .news-summary {
-            font-size: 18px;
-            color: #555;
-        }
-
-        .news-body {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .news-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        /* Optional: Styling for the footer or additional information */
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #777;
-        }
-
-        .footer a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web Tin Tức - Khoa Học</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>Latest News</h1>
-    </div>
-    <div class="news-list">
-        <!-- News Item 1 -->
-        <div class="news-item">
-            <img src="/path/to/image1.jpg" alt="News Image 1" class="news-image">
-            <div class="news-title">News Title 1</div>
-            <div class="news-summary">This is a brief summary of the first news post.</div>
-            <a href="/news/article1" class="read-more">Read More</a>
+        <div class="navbar">
+            <label class="left">Thu 4 Ngay 19 Thang 1 Nam 2022</label>
+            <label class="right">Dang Nhap</label>
         </div>
-
-        <!-- News Item 2 -->
-        <div class="news-item">
-            <img src="/path/to/image2.jpg" alt="News Image 2" class="news-image">
-            <div class="news-title">News Title 2</div>
-            <div class="news-summary">This is a brief summary of the second news post.</div>
-            <a href="/news/article2" class="read-more">Read More</a>
+        <div class="logo">
+            <img src="https://all-digital.org/wp-content/uploads/2018/02/CODINC-logo-600x323-rgb.png" style="max-height: 100px;">
+            <div class="search-form">
+                <input type="text" name="s" placeholder="Enter searching ...">
+                <button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
         </div>
-
-        <!-- Add more news items as needed -->
+        <div class="menu">
+            <ul>
+                <li>Trang Chu</li>
+                <li>Gioi Thieu</li>
+                <li>Tin Tuc</li>
+                <li>Chia Se</li>
+                <li>Quan Diem</li>
+                <li>Lien He</li>
+            </ul>
+        </div>
     </div>
-    <div class="footer">
-        <p>&copy; 2024 Your Company. <a href="#">Back to Home</a></p>
+    <div class="body-content">
+        <div class="main-content">
+            <!-- row: 12 cell -->
+            <div class="content">
+                <div class="row">
+                    <div class="col-4">
+                        <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                    </div>
+                    <div class="col-4">
+                        <div class="content">
+                            <h3>Xin chao abc</h3>
+                            <p>Xin chao</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="content">
+                            <ul>
+                                <li>Vi du 1</li>
+                                <li>Vi du 1</li>
+                                <li>Vi du 1</li>
+                                <li>Vi du 1</li>
+                                <li>Vi du 1</li>
+                                <li>Vi du 1</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="group">
+                    <h2>Tin Nong</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu-right">
+            <div class="content">
+                <div class="group">
+                    <h2>Tin Moi</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="group">
+                    <h2>Tin Moi</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="group">
+                    <h2>Tin Moi</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="https://gokisoft.com/uploads/stores/49/2021/10/coding-c-program.jpg" style="width: 100%">
+                        </div>
+                        <div class="col-8">
+                            Xin chao abc Xin chao abc Xin chao abc
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

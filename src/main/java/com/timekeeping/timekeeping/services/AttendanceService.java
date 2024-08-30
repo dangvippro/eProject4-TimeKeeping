@@ -48,7 +48,16 @@ public class AttendanceService {
         attendanceRecordRepository.save(record);
     }
 
-   
+//    public AttendanceRecord saveAttendance(String name, int age) {
+//        AttendanceRecord attendance = new AttendanceRecord();
+//        attendance.setAccountID(name);
+//        attendance.setAccountID(age);
+//        attendance.setClockInTime(LocalDateTime.now());
+//        attendance.setClockOutTime(LocalDateTime.now());
+//
+//        return AttendanceRecordRepository.save(attendance);
+//    }
+//
     
 
     private double calculateWorkingHours(LocalDateTime clockInTime, LocalDateTime clockOutTime) {

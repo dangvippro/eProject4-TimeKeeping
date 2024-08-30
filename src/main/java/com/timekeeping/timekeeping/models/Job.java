@@ -20,16 +20,16 @@ public class Job {
     private Date closingDate;
     private String status;
     private int experienceYears;
-    private String path;
+    private String image;
 
-    @Lob
-    @Column(name = "image")
-    private byte[] image;
+//    @Lob
+//    @Column(name = "image")
+//    private byte[] image;
 
     public Job() {
     }
 
-    public Job(int jobID, String title, String description, String requirements, String location, String salaryRange, Date postingDate, Date closingDate, String status, int experienceYears) {
+    public Job(int jobID, String title, String description, String requirements, String location, String salaryRange, Date postingDate, Date closingDate, String status, int experienceYears, String image) {
         this.jobID = jobID;
         this.title = title;
         this.description = description;
@@ -40,27 +40,27 @@ public class Job {
         this.closingDate = closingDate;
         this.status = status;
         this.experienceYears = experienceYears;
-        this.path = path;
         this.image = image;
+//        this.image = image;
     }
 
     
 
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
+
+//    public byte[] getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(byte[] image) {
+//        this.image = image;
+//    }
 
    
 

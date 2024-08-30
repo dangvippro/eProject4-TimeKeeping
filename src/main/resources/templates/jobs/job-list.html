@@ -144,7 +144,10 @@
     <tr th:each="job : ${jobs}">
       <td th:text="${job.jobID}"></td>
       <td th:text="${job.title}"></td>
-      <td th:text="${job.image}"></td>
+      <td>
+        <img th:if="${job.imagePath}" th:src="@{/images/[[${job.imagePath}]]}" alt="Job Image" style="width:100px;height:auto;" />
+        <span th:if="${!job.imagePath}">No Image</span>
+      </td>
       <td th:text="${job.description}"></td>
       <td th:text="${job.requirements}"></td>
       <td th:text="${job.location}"></td>
@@ -155,11 +158,10 @@
       <td th:text="${job.experienceYears}"></td>
 
       <td>
-        <a th:href="@{/jobs/edit/{jobID}(id=${job.jobID})}" class="btn btn-warning btn-sm">Edit</a>
-
+        <a th:href="@{/jobs/edit/{jobID}(jobID=${job.jobID})}" class="btn btn-warning btn-sm">Edit</a>
       </td>
       <td>
-        <a th:href="@{/jobs/delete/{jobID}(id=${job.jobID})}" class="btn btn-danger btn-sm">Delete</a>
+        <a th:href="@{/jobs/delete/{jobID}(jobID=${job.jobID})}" class="btn btn-danger btn-sm">Delete</a>
       </td>
     </tr>
     </tbody>
