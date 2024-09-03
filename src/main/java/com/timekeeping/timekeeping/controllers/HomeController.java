@@ -1,15 +1,35 @@
 package com.timekeeping.timekeeping.controllers;
 
+import com.timekeeping.timekeeping.models.Requestion;
+import com.timekeeping.timekeeping.services.RequestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Date;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
+    @Autowired
+    private RequestionService requestionService;
+    @GetMapping("/requestion-create")
+    public String createRequestion(Model model) {
+        model.addAttribute("requestion", new Requestion());
+        return "home/requestion-create";
+    }
+    @PostMapping("/requestion-create")
+    public String createRequest(@ModelAttribute Requestion requestion, RedirectAttributes redirectAttributes) {
+        requestion.setRequestDate(new Date());
+        requestion.setStatus("Đang chờ phê duyệt");
+        requestionService.createRequestion(requestion);
+        // Add a flash attribute for success message
+        redirectAttributes.addFlashAttribute("successMessage", "Tạo yêu cầu thành công");
+        return "redirect:/requestion";
+    }
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("title", "Home Page");
