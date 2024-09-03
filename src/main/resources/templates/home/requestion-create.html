@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Requestion</title>
+</head>
+<body>
+<div class="grid wide" style="margin-top: 130px;">
+    <div class="row" style="margin-top: 150px; margin-bottom: 40px;">
+        <div class="col l-7 m-12 s-12">
+            <div class="pay-information">
+                <form th:action="@{/requestion-create}" th:object="${requestion}" method="post">
+                    <div class="form-group">
+                        <label for="requestID" class="form-label">ID yêu cầu</label>
+                        <input type="hidden" id="requestID" th:field="${requestion.requestID}" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="requestName" class="form-label">Tên yêu cầu</label>
+                        <select id="requestName" name="requestName" class="form-control" th:field="${requestion.requestName}">
+                            <option value="Yêu cầu làm thêm giờ">Yêu cầu làm thêm giờ</option>
+                            <option value="Yêu cầu xin nghỉ phép">Yêu cầu xin nghỉ phép</option>
+                            <option value="Yêu cầu xin thôi việc">Yêu cầu xin thôi việc</option>
+                            <option value="Yêu cầu xin vắng hoạt động">Yêu cầu xin vắng hoạt động</option>
+                            <option value="Yêu cầu sửa bảng chấm công">Yêu cầu sửa bảng chấm công</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ngày bắt đầu</label>
+                        <input type="datetime-local" id="startDate" name="startDate" th:field="${requestion.startDate}" required class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ngày kết thúc</label>
+                        <input type="datetime-local" id="endDate" name="endDate" th:field="${requestion.endDate}" required class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="reason" class="form-label">Lý do</label>
+                        <textarea id="reason" name="reason" cols="10" rows="5" class="form-control" th:field="${requestion.reason}"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn--default">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Display success message if available -->
+    <div th:if="${successMessage}" th:onclick="|showAlert('${successMessage}')|"></div>
+</div>
+</body>
+</html>
